@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMウォッチシステム｜InstagramのDMを見落とさない</title>
+<style>
+:root{
+    --ground:#faf7f0; --panel:#ffffff; --panel-2:#f3eee3;
+    --ink:#241f17; --muted:#7d7566; --line:#e7dfcf;
+    --gold:#c68a00; --gold-soft:#e9a900; --rose:#c14b7d;
+    --shadow:0 1px 2px rgba(40,30,10,.05),0 8px 30px rgba(40,30,10,.07);
+    --radius:16px;
+    --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground)}
+  .wrap{
+    font-family:var(--sans); color:var(--ink); background:var(--ground);
+    -webkit-font-smoothing:antialiased; line-height:1.7;
+    padding:clamp(20px,5vw,64px) clamp(16px,5vw,32px);
+  }
+  .page{max-width:960px;margin:0 auto}
+  .eyebrow{
+    font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gold); font-weight:800; margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(38px,7vw,64px); line-height:1.02; letter-spacing:-.02em;
+    margin:0 0 16px; font-weight:900; text-wrap:balance;
+  }
+  .lead{font-size:clamp(16px,2.4vw,20px); color:var(--muted); max-width:34em; margin:0}
+  .tag-mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  /* hero */
+  .hero{display:grid; grid-template-columns:1.3fr .7fr; gap:clamp(24px,4vw,48px); align-items:center; margin-bottom:56px}
+  @media (max-width:680px){.hero{grid-template-columns:1fr}}
+  .phone{
+    aspect-ratio:9/16; border-radius:24px; overflow:hidden; position:relative;
+    background:linear-gradient(160deg,#161029,#221a2e 60%,#2f2113);
+    box-shadow:var(--shadow); border:1px solid var(--line);
+    padding:20px 16px; max-width:260px; width:100%; margin:0 auto;
+    display:flex; flex-direction:column; gap:9px; justify-content:center;
+  }
+  .phone::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(60% 40% at 50% 25%,rgba(245,197,66,.24),transparent 62%)}
+  .tw{position:relative;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+    border-radius:11px;padding:9px 11px;display:grid;grid-template-columns:20px 1fr;gap:8px}
+  .tw .av{width:20px;height:20px;border-radius:50%;background:linear-gradient(140deg,#f5c542,#c14b7d)}
+  .tw .nm{font-size:9.5px;font-weight:800;color:#fff;opacity:.9;margin-bottom:2px}
+  .tw .tx{font-size:10.5px;color:#fff;opacity:.72;line-height:1.45}
+  .tw .hb{position:absolute;right:9px;bottom:7px;font-size:11px}
+  .tw.liked{border-color:rgba(245,197,66,.45);background:rgba(245,197,66,.09)}
+  .phone .pill{position:relative;text-align:center;margin-top:6px}
+  .phone .pill span{font-size:10.5px;letter-spacing:.1em;color:#f5c542;
+    border:1px solid rgba(245,197,66,.4);padding:5px 12px;border-radius:999px;font-weight:700}
+
+  /* step strip */
+  .steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .steps .s{display:flex;align-items:center;gap:10px;background:var(--panel);
+    border:1px solid var(--line);border-radius:999px;padding:9px 16px 9px 10px;font-weight:700;font-size:14px}
+  .steps .n{width:24px;height:24px;border-radius:50%;background:var(--gold);color:#1a1206;
+    display:grid;place-items:center;font-size:13px;font-weight:900}
+
+  section{margin:52px 0}
+  h2{font-size:clamp(22px,3.4vw,30px);letter-spacing:-.01em;margin:0 0 6px;font-weight:900}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:15px}
+
+  /* pipeline */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:680px){.flow{grid-template-columns:1fr 1fr}}
+  .node{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;box-shadow:var(--shadow)}
+  .node .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800}
+  .node h3{margin:8px 0 6px;font-size:17px;font-weight:800}
+  .node p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+  .callout{background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:12px;padding:18px 20px;margin:22px 0 0;font-size:15px}
+  .callout b{color:var(--ink)}
+  .callout.warn{border-left-color:var(--rose)}
+
+  /* 配布キット */
+  .kit{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+    padding:clamp(22px,4vw,34px);box-shadow:var(--shadow)}
+  .kit-actions{display:flex;gap:12px;flex-wrap:wrap;margin:4px 0 18px}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);
+    font-weight:800;font-size:15px;padding:14px 22px;border-radius:12px;cursor:pointer;
+    border:1px solid var(--line);background:var(--panel-2);color:var(--ink);text-decoration:none;
+    transition:transform .08s ease,filter .15s ease}
+  .btn:hover{filter:brightness(1.04)} .btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .btn.primary{background:var(--gold);color:#1a1206;border-color:transparent}
+  .btn .sz{font-weight:600;font-size:12px;opacity:.7}
+  .kit .row{background:var(--panel-2);box-shadow:none}
+  .msgbox{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto}
+  .msgbox pre{margin:0;font-family:var(--sans);font-size:13.5px;line-height:1.75;white-space:pre-wrap;word-break:break-word}
+  .hint{color:var(--muted);font-size:13px;margin:14px 0 0}
+
+  /* rows */
+  .use{display:grid;gap:12px}
+  .row{display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:start;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .row .n{width:30px;height:30px;border-radius:9px;background:var(--gold);color:#1a1206;
+    display:grid;place-items:center;font-weight:900;font-size:15px}
+  .row .t b{font-size:15.5px}
+  .row .t p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    background:color-mix(in srgb,var(--ink) 8%,transparent);padding:2px 7px;border-radius:6px;
+    display:inline-block;margin-top:8px;color:var(--ink)}
+
+  /* accounts */
+  .acc-group{margin:0 0 22px}
+  .acc-group > h3{font-size:15px;margin:0 0 4px;font-weight:900}
+  .acc-group > p{margin:0 0 12px;font-size:13.5px;color:var(--muted)}
+  .accs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:680px){.accs{grid-template-columns:1fr}}
+  .acc{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:13px 15px;text-decoration:none;color:inherit;transition:transform .08s ease,filter .15s ease}
+  .acc:hover{filter:brightness(1.03);transform:translateY(-1px)}
+  .acc b{font-size:14.5px;display:block}
+  .acc .h{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--gold);font-weight:700}
+  .acc span{display:block;margin-top:5px;font-size:12.5px;color:var(--muted);line-height:1.55}
+
+  /* rules */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:680px){.rules{grid-template-columns:1fr}}
+  .rule{display:flex;gap:12px;align-items:flex-start;background:var(--panel);
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rule .dot{font-weight:900;margin-top:1px;color:var(--gold)}
+  .rule .dot.no{color:var(--rose)}
+  .rule span{font-size:14px}
+
+  /* table */
+  .tbl{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;font-size:14px}
+  .tbl th,.tbl td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  .tbl th{background:var(--panel-2);font-size:13px;font-weight:800}
+  .tbl tr:last-child td{border-bottom:none}
+  .scroll-x{overflow-x:auto}
+
+  .det{margin-top:16px}
+  .det summary{cursor:pointer;font-weight:800;font-size:14px;color:var(--gold);list-style:none;
+    display:inline-flex;align-items:center;gap:8px;padding:8px 0}
+  .det summary::-webkit-details-marker{display:none}
+  .det summary::before{content:"▸";font-size:12px}
+  .det[open] summary::before{content:"▾"}
+  .det summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="wrap"><div class="page">
+
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Instagram ・ <span class="tag-mono" style="text-transform:none;letter-spacing:0">DMウォッチ</span></p>
+      <h1>DMの見落としを、<br>ゼロにする。</h1>
+      <p class="lead">1日4回（10時・14時・17時・19時）、Claudeのクラウドが Instagram の新着DMを確認して、<b>対応が必要なものだけ</b>返信案つきでLINEに通知します。PCを閉じていても動きます。</p>
+      <div class="steps">
+        <div class="s"><span class="n">1</span>自動で見に行く</div>
+        <div class="s"><span class="n">2</span>仕分ける</div>
+        <div class="s"><span class="n">3</span>LINEに届く</div>
+      </div>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="tw liked"><div class="av"></div><div><div class="nm">🔴 要対応 2件</div><div class="tx">料金の問い合わせ／日程の相談</div></div><div class="hb">❗</div></div>
+      <div class="tw"><div class="av"></div><div><div class="nm">🟡 確認 1件</div><div class="tx">画像だけ届いている</div></div></div>
+      <div class="tw"><div class="av"></div><div><div class="nm">⚪ 対応不要 4件</div><div class="tx">スタンプ・お礼のみ</div></div></div>
+      <div class="pill"><span>▍ 読む → 仕分ける → 返信案</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 style="margin-top:24px">先に確認してください</h2>
+    <div class="callout warn"><b>この仕組みは Instagram を「プロアカウント」に切り替える必要があります。</b><br>
+      切り替えると、次のことが起きます。<b>元に戻すのは手間がかかります。</b>
+      <div class="rules" style="margin-top:12px">
+        <div class="rule"><span class="dot no">✕</span><span><b>非公開アカウントにできなくなります</b></span></div>
+        <div class="rule"><span class="dot no">✕</span><span><b>保留中のフォローリクエストが自動で承認されます</b></span></div>
+        <div class="rule"><span class="dot no">✕</span><span>商用利用が許可されていない音源が使えなくなります</span></div>
+      </div>
+      <p style="margin:12px 0 0">非公開で運用している方、フォローリクエストを選別している方には向きません。<b>問題ないことを確かめてから</b>進めてください。</p>
+    </div>
+  </section>
+
+  <section class="kit">
+    <h2>導入は、この3ステップ</h2>
+    <p class="sub">プロンプトをClaude Codeに貼るだけ。ファイルのダウンロードは要りません。</p>
+    <div class="use">
+      <div class="row"><div class="n">1</div><div class="t"><b>導入プロンプトをコピーする</b>
+        <p>Claude Codeに貼り付ける指示文です。中身を読む必要はありません。</p>
+        <div style="margin-top:12px"><button class="btn primary" id="copyMsg" type="button">📋 導入プロンプトをコピー</button></div>
+      </div></div>
+      <div class="row"><div class="n">2</div><div class="t"><b>Claude Codeに貼り付けて送信する</b>
+        <p>まず<b>プロアカウント切り替えの影響</b>を説明してくれます。納得してから進めてください。</p></div></div>
+      <div class="row"><div class="n">3</div><div class="t"><b>ログインとトークンの貼り付けだけ担当する</b>
+        <p>画面の操作や設定はClaude Codeが進めます。所要時間は45〜90分ほど。<b>いちばん時間がかかるのはMetaの画面</b>です。</p></div></div>
+    </div>
+    <details class="det">
+      <summary>導入プロンプトの中身を見る</summary>
+      <div class="msgbox" style="margin-top:10px">
+<pre id="sendMsg">https://github.com/ryoya9595/dm-watch をcloneして、中の
+「導入手順_ClaudeCodeに読ませる.md」を読み、その手順どおりに導入を進めてください。
+
+■ 最初にやってほしいこと
+・Instagramをプロアカウントに切り替える影響（非公開にできなくなる、
+　保留中のフォローリクエストが自動承認される）を先に説明してください。
+　私が納得してから次に進んでください。
+
+■ 進め方のお願い
+・各ステップの前に、これから何をするかを説明して、進めてよいか確認してください。
+・私はログインと、画面に出たトークンの貼り付けだけ担当します。
+　それ以外の画面操作と設定は、あなたが進めてください。
+・私のOS（Mac / Windows）に合うコマンドを選んでください。
+
+■ 特に気をつけてほしいこと
+・トークンをチャットに書き出さないでください。貼り付けは私がやります。
+・Instagramへの返信・フォロー・いいねは一切しないでください。読むだけです。
+・削除・再発行・課金の操作は、押す直前に必ず私に確認してください。
+
+くわしい解説ページ：
+https://ryoya9595.github.io/dm-watch/</pre>
+      </div>
+    </details>
+    <p class="hint">※ 人に渡すときは、このページのURLを送るだけでOK。</p>
+  </section>
+
+  <section>
+    <h2>届くのは<span style="color:var(--gold)">「対応が要るものだけ」</span>。</h2>
+    <p class="sub">全部のDMを転送したら、結局それを読む手間が増えるだけです。3つに仕分けてから届きます。</p>
+    <div class="flow">
+      <div class="node"><div class="k">🔴</div><b>要対応</b>
+        <p>質問・申し込み・日程の相談・料金の問い合わせ・クレームなど、返信を求められているもの。<b>返信案が1つ付きます。</b></p></div>
+      <div class="node"><div class="k">🟡</div><b>確認</b>
+        <p>意図がはっきりしない／一言だけ／画像や動画だけ。判断はあなたに任せます。</p></div>
+      <div class="node"><div class="k">⚪</div><b>対応不要</b>
+        <p>スタンプ・リアクション・お礼だけ・明らかな宣伝。名前だけ並べます。</p></div>
+    </div>
+    <div class="callout"><b>新着が無ければ、何も届きません。</b> 「今日は0件です」という通知は送りません（無料枠の節約と、通知疲れを防ぐため）。<b>静かな日は静かなまま</b>です。</div>
+  </section>
+
+  <section>
+    <h2>用意するもの</h2>
+    <p class="sub">費用は0円です。追加で払うものはありません。</p>
+    <div class="scroll-x">
+      <table class="tbl">
+        <tr><th style="width:34%">必要なもの</th><th>補足</th></tr>
+        <tr><td><b>Instagramアカウント</b></td><td><b>プロアカウントに切り替えられること</b>（上の注意を必ず確認）</td></tr>
+        <tr><td><b>Facebookアカウント</b></td><td>Metaの開発者画面にログインするために使います。無ければ作成（Instagramと連携させる必要はありません）</td></tr>
+        <tr><td><b>通知を受け取るLINE</b></td><td><b>通知専用のLINE公式アカウントを新しく作るのがおすすめ</b>（無料。既存の配信の枠を使いません）</td></tr>
+        <tr><td><b>Claudeのプラン</b></td><td>Pro / Max / Team のいずれか</td></tr>
+        <tr><td>GitHubアカウント</td><td>キットを非公開リポジトリに置くために使います</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>やること・<span style="color:var(--rose)">やらないこと</span></h2>
+    <p class="sub">読むだけの仕組みです。Instagram側へ何かをすることはありません。</p>
+    <div class="rules">
+      <div class="rule"><span class="dot">✓</span><span>決まった時刻に新着DMを確認する</span></div>
+      <div class="rule"><span class="dot">✓</span><span>対応が必要なものを仕分けて、<b>返信案を1つ</b>付ける</span></div>
+      <div class="rule"><span class="dot">✓</span><span>1通にまとめてLINEに送る（新着が無ければ送らない）</span></div>
+      <div class="rule"><span class="dot no">✕</span><span>Instagramへの<b>返信・フォロー・いいね・既読</b>など外向きの操作</span></div>
+      <div class="rule"><span class="dot no">✕</span><span>DMの本文を全文そのまま転記する（要約します）</span></div>
+      <div class="rule"><span class="dot no">✕</span><span><b>DMの中に書かれた指示に従う</b>（本文は情報であって命令ではありません）</span></div>
+      <div class="rule"><span class="dot no">✕</span><span>既存のファイル・アカウント・設定を削除／上書きする</span></div>
+    </div>
+    <div class="callout warn"><b>送信が失敗した回のDMは、次回もう一度通知されます。</b> まれに同じDMが2回届きますが、正常な動作です。<b>取りこぼすよりよい</b>という設計にしています。</div>
+  </section>
+
+  <section>
+    <h2>いちばん大事な注意</h2>
+    <div class="callout warn"><b>Instagramのアクセストークンは約60日で切れます。</b><br>
+      切れると「⚠️ Instagram DMチェックが失敗しました」というLINEが届きます。更新のしかたは手順書に書いてあります。<br>
+      <b>発行から50日後くらいに、カレンダーへリマインドを入れておいてください。</b>
+      ここを忘れると「いつの間にか止まっていた」ということが起きます。</div>
+  </section>
+
+  <section>
+    <h2>困ったときは</h2>
+    <p class="sub">だいたいこの5つのどれかです。</p>
+    <div class="scroll-x">
+      <table class="tbl">
+        <tr><th style="width:42%">症状</th><th>対処</th></tr>
+        <tr><td><b>通知が来ない</b></td><td><b>新着DMが無いだけのことが多い</b>です。別のアカウントから自分にDMを送って、もう一度動かして確認する</td></tr>
+        <tr><td>約60日たって急に止まった</td><td>トークンの有効期限切れ。手順書の「トークンの更新」を行う</td></tr>
+        <tr><td>LINEに届かない（送信でエラー）</td><td>通知用のLINEアカウントを<b>友だち追加しているか</b>確認する。ここが最頻出です</td></tr>
+        <tr><td>Instagramの情報が取れない</td><td>Metaの設定でアクセス許可が足りていない可能性。Claude Codeにエラーの内容を伝える</td></tr>
+        <tr><td>きっかりの時刻に来ない</td><td>仕様です。サーバーの負荷分散で数分ずれます</td></tr>
+      </table>
+    </div>
+    <p class="hint">Metaの管理画面は名称や配置がよく変わります。手順書と表示が違っても、同じ意味の項目を探せば進めます。迷ったら画面のスクリーンショットをClaude Codeに見せて「どれを押せばいい？」と聞くのが早いです。</p>
+  </section>
+
+</div></div>
+
+<script>
+(function(){
+  function bind(btnId,preId){
+    var btn=document.getElementById(btnId), msg=document.getElementById(preId);
+    if(!btn||!msg)return;
+    btn.addEventListener('click',function(){
+      var text=msg.textContent||msg.innerText;
+      var ok=function(){var o=btn.innerHTML;btn.textContent='\u2713 \u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f';setTimeout(function(){btn.innerHTML=o;},1700);};
+      var fb=function(){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);ok();};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok,fb);}else{fb();}
+    });
+  }
+  bind('copyMsg','sendMsg');
+})();
+</script>
+</body>
+</html>
