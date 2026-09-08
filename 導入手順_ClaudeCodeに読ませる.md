@@ -24,33 +24,28 @@
 
 ## STEP 0｜キットを手に入れる
 
-すでにキットのフォルダが手元にある（Zipを解凍済み・ドラッグ＆ドロップされた等）なら、STEP 1 へ。
+**Zipが添付されている場合（通常はこちら）**：解凍して、中の `dm-watch/` がキット本体。以降「このキットのパス」＝ここ。
+解凍されていなければ、あなたが解凍する。
 
-無ければ自分で取得する（公開リポジトリなのでログイン不要）：
+Zipが無い場合は、次のどちらかで取得する（公開リポジトリなのでログイン不要）：
 
-**Mac / Linux**
+**Zipで取る（gitが無くてもよい・こちらを優先）**
+
+Mac / Linux
+```
+cd ~/Desktop && curl -sSL -o dm-watch-kit.zip https://ryoya9595.github.io/dm-watch/dm-watch-kit.zip && unzip -q dm-watch-kit.zip
+```
+Windows（PowerShell）
+```
+Set-Location "$HOME\Desktop"; Invoke-WebRequest -Uri https://ryoya9595.github.io/dm-watch/dm-watch-kit.zip -OutFile dm-watch-kit.zip; Expand-Archive dm-watch-kit.zip -DestinationPath .
+```
+
+**git があるなら clone でもよい**
 ```
 cd ~/Desktop && git clone https://github.com/ryoya9595/dm-watch.git
 ```
-**Windows（PowerShell）**
-```
-Set-Location "$HOME\Desktop"; git clone https://github.com/ryoya9595/dm-watch.git
-```
-→ `dm-watch/` がキット本体。以降「このキットのパス」＝ここ。
-
-git が無い場合は Zip でも取れる：
-
-**Mac / Linux**
-```
-cd ~/Desktop && curl -sSL -o dm-watch.zip https://github.com/ryoya9595/dm-watch/archive/refs/heads/main.zip && unzip -q dm-watch.zip
-```
-**Windows（PowerShell）**
-```
-Set-Location "$HOME\Desktop"; Invoke-WebRequest -Uri https://github.com/ryoya9595/dm-watch/archive/refs/heads/main.zip -OutFile dm-watch.zip; Expand-Archive dm-watch.zip -DestinationPath .
-```
-（展開すると `dm-watch-main/` になる）
-
-取得できたら、同じフォルダの `はじめにお読みください.md` と `事前準備ガイド.md` も読んでおく（事前準備ガイドは、あなたが画面を進めるときの台本になる）。
+> ⚠️ **macOS には `git` が標準で入っていない。** `git` を実行すると「開発者ツールをインストールしますか」というダイアログが出ることがある。
+> 担当者がインストールを望まない場合は、**上のZipの方法に切り替える**こと。ここで止めない。
 
 ## STEP 1｜全体像を説明し、確認を取る
 

@@ -188,22 +188,26 @@
   </section>
 
   <section class="kit">
-    <h2>導入は、この3ステップ</h2>
-    <p class="sub">プロンプトをClaude Codeに貼るだけ。ファイルのダウンロードは要りません。</p>
+    <h2>導入は、この4ステップ</h2>
+    <p class="sub">ZipとプロンプトをClaude Codeに渡すだけ。ターミナルでコマンドを打つ必要はありません。</p>
     <div class="use">
-      <div class="row"><div class="n">1</div><div class="t"><b>導入プロンプトをコピーする</b>
-        <p>Claude Codeに貼り付ける指示文です。中身を読む必要はありません。</p>
-        <div style="margin-top:12px"><button class="btn primary" id="copyMsg" type="button">📋 導入プロンプトをコピー</button></div>
+      <div class="row"><div class="n">1</div><div class="t"><b>Zipをダウンロードする</b>
+        <p>解凍しなくてOK。そのまま使います。</p>
+        <div style="margin-top:12px"><a class="btn primary" href="dm-watch-kit.zip" download>⬇ dm-watch-kit.zip <span class="sz">約63KB</span></a></div>
       </div></div>
-      <div class="row"><div class="n">2</div><div class="t"><b>Claude Codeに貼り付けて送信する</b>
-        <p>まず<b>プロアカウント切り替えの影響</b>を説明してくれます。納得してから進めてください。</p></div></div>
-      <div class="row"><div class="n">3</div><div class="t"><b>ログインとトークンの貼り付けだけ担当する</b>
+      <div class="row"><div class="n">2</div><div class="t"><b>導入プロンプトをコピーする</b>
+        <p>Claude Codeに貼り付ける指示文です。中身を読む必要はありません。</p>
+        <div style="margin-top:12px"><button class="btn" id="copyMsg" type="button">📋 導入プロンプトをコピー</button></div>
+      </div></div>
+      <div class="row"><div class="n">3</div><div class="t"><b>Zipをドラッグして、プロンプトを貼り付ける</b>
+        <p>Claude Codeのチャットに、Zipファイルをドラッグ＆ドロップ。そのまま、コピーしたプロンプトを貼り付けて送信します。まず<b>プロアカウント切り替えの影響</b>を説明してくれます。</p></div></div>
+      <div class="row"><div class="n">4</div><div class="t"><b>ログインとトークンの貼り付けだけ担当する</b>
         <p>画面の操作や設定はClaude Codeが進めます。所要時間は45〜90分ほど。<b>いちばん時間がかかるのはMetaの画面</b>です。</p></div></div>
     </div>
     <details class="det">
       <summary>導入プロンプトの中身を見る</summary>
       <div class="msgbox" style="margin-top:10px">
-<pre id="sendMsg">https://github.com/ryoya9595/dm-watch をcloneして、中の
+<pre id="sendMsg">添付した dm-watch-kit.zip を解凍して、中の
 「導入手順_ClaudeCodeに読ませる.md」を読み、その手順どおりに導入を進めてください。
 
 ■ 最初にやってほしいこと
