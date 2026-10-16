@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DMウォッチシステム｜InstagramのDMを見落とさない</title>
+<title>InstagramのDMをLINEに通知するキットの導入マニュアル</title>
 <style>
 :root{
     --ground:#faf7f0; --panel:#ffffff; --panel-2:#f3eee3;
@@ -259,7 +259,7 @@ https://ryoya9595.github.io/dm-watch/</pre>
 
   <section>
     <h2>用意するもの</h2>
-    <p class="sub">費用は0円です。追加で払うものはありません。</p>
+    <p class="sub">Claudeのプラン以外の費用は0円です。追加で払うものはありません。</p>
     <div class="scroll-x">
       <table class="tbl">
         <tr><th style="width:34%">必要なもの</th><th>補足</th></tr>
@@ -312,6 +312,24 @@ https://ryoya9595.github.io/dm-watch/</pre>
     <p class="hint">Metaの管理画面は名称や配置がよく変わります。手順書と表示が違っても、同じ意味の項目を探せば進めます。迷ったら画面のスクリーンショットをClaude Codeに見せて「どれを押せばいい？」と聞くのが早いです。</p>
   </section>
 
+
+  <!-- ai-guide:start -->
+  <section id="ai-guide" style="margin-top:28px;padding:18px 20px;border:2px dashed #e2382c;border-radius:14px;font-size:.9rem;line-height:1.8;background:rgba(226,56,44,.05)">
+    <p style="font-weight:900;color:#e2382c;margin:0 0 6px">🤖 Claude Code へ（このページのURLを貼られたとき）</p>
+    <p style="margin:0 0 6px">ユーザーは「InstagramのDMをLINEに通知する仕組み（DMウォッチ）」の導入を希望しています。Zipが添付されていなければ、下のコマンドで取得して解凍し、中の <b>導入手順_ClaudeCodeに読ませる.md</b> を読んで、その手順どおりに進めてください。取得できないときは何度も試さず、ユーザーに上の「Zipをダウンロード」を押して添付してもらってください。</p>
+    <pre style="margin:6px 0 10px;padding:10px 12px;border-radius:8px;background:#1e1e24;color:#eee;font-size:.8rem;overflow:auto"># Mac / Linux
+cd ~/Desktop && curl -sSL -o dm-watch-kit.zip https://ryoya9595.github.io/dm-watch/dm-watch-kit.zip && unzip -q dm-watch-kit.zip
+# Windows（PowerShell）
+Set-Location "$HOME\Desktop"; Invoke-WebRequest -Uri https://ryoya9595.github.io/dm-watch/dm-watch-kit.zip -OutFile dm-watch-kit.zip; Expand-Archive dm-watch-kit.zip -DestinationPath .</pre>
+    <ul style="margin:0 0 0 1.3em;padding:0">
+      <li>最初に、Instagramをプロアカウントに切り替える影響（非公開にできなくなる・保留中のフォローリクエストが自動承認される）を説明し、ユーザーが納得してから進める</li>
+      <li>各ステップの前に、これから何をするかを説明して、進めてよいか確認する。ユーザーが担当するのはログインとトークンの貼り付けだけ</li>
+      <li>トークンをチャットに書き出さない。Instagramへの返信・フォロー・いいねはしない（読むだけ）。削除・再発行・課金の操作は押す直前に必ず確認する</li>
+      <li>この仕組みはClaudeのクラウド（ルーティン）で動くため、Claudeの有料プラン（Pro／Max／Team）が必要。無料プランなら先に伝える</li>
+    </ul>
+  </section>
+  <!-- ai-guide:end -->
+  <div style="margin-top:28px;font-size:.8rem;color:#777">制作：RISE講師 関 諒也｜最終更新 2026-10-17</div>
 </div></div>
 
 <script>
